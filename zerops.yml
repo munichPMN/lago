@@ -1,0 +1,26 @@
+zerops:
+     - setup: api
+       type: ruby@3.2
+       build:
+         base: ruby@3.2
+         buildCommands:
+           - bundle install
+         deployFiles:
+           - .
+       run:
+         start: bundle exec rails server -b 0.0.0.0 -p 3000
+
+     - setup: front
+       type: nodejs@20
+       build:
+         base: nodejs@20
+         buildCommands:
+           - npm install
+           - npm run build
+         deployFiles:
+           - .next
+           - public
+           - package.json
+           - node_modules
+       run:
+         start: npm run start
