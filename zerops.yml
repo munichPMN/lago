@@ -3,24 +3,24 @@ zerops:
     build:
       base: alpine/ruby@3.4
       buildCommands:
-        - bundle install
+        - cd api && bundle install
       deployFiles:
-        - .
+        - api
     run:
       base: alpine/ruby@3.4
-      start: bundle exec rails server -b 0.0.0.0 -p 3000
+      start: cd api && bundle exec rails server -b 0.0.0.0 -p 3000
 
   - setup: front
     build:
       base: alpine/nodejs@24
       buildCommands:
-        - npm install
-        - npm run build
+        - cd front && npm install
+        - cd front && npm run build
       deployFiles:
-        - .next
-        - public
-        - package.json
-        - node_modules
+        - front/.next
+        - front/public
+        - front/package.json
+        - front/node_modules
     run:
       base: alpine/nodejs@24
-      start: npm run start
+      start: cd front && npm run start
